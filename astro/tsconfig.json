@@ -1,22 +1,20 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2020",
     "module": "esnext",
     "composite": true,
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
     "downlevelIteration": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "outDir": "dist"
   },
-  "include": [
-    "src/**/*.ts"
-  ],
+  "include": ["src/**/*.ts"],
   "typedocOptions": {
     "readme": "../docs/engine/astro-index.md",
     "out": "../docs/engine/static/apiref/astro",

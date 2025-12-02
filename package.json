@@ -21,7 +21,7 @@
     "doc": "yarn workspaces foreach -vt run doc",
     "lint": "yarn workspaces foreach -vt run lint",
     "test": "yarn workspaces foreach -vt run test",
-    "serve-creator": "concurrently \"cd embed && npm run serve -- --port=23000\" \"cd embed-creator && npm run serve -- --port=8080\"",
+    "serve-creator": "concurrently \"cd embed && yarn run serve -- --port=23000\" \"cd embed-creator && yarn run serve -- --port=8080\"",
     "serve-embed": "cd embed && yarn run serve",
     "serve-research": "cd research-app && yarn run serve"
   },
@@ -39,9 +39,9 @@
     "@wwtelescope/ui-components": "workspace:*"
   },
   "devDependencies": {
-    "concurrently": "^5.2.0",
-    "rimraf": "^3",
+    "concurrently": "^9.1.0",
+    "rimraf": "^6.0.1",
     "typedoc-plugin-vue": "^1.1.0"
   },
-  "packageManager": "yarn@3.3.0"
+  "packageManager": "yarn@4.5.3"
 }
