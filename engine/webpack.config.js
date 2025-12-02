@@ -1,4 +1,5 @@
 const path = require("path");
+const TerserPlugin = require("terser-webpack-plugin");
 
 var config = {
     entry: "./esm/index.js",
@@ -20,6 +21,21 @@ module.exports = (_env, argv) => {
 
     if (argv.mode === "production") {
         config.output.filename = "index.min.js";
+        config.optimization = {
+            minimize: true,
+            minimizer: [
+                new TerserPlugin({
+                    terserOptions: {
+                        compress: {
+                            drop_console: true,
+                            drop_debugger: true,
+                            pure_funcs: ['console.log', 'console.debug'],
+                        },
+                        mangle: true,
+                    },
+                }),
+            ],
+        };
     }
 
     return config;

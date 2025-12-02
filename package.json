@@ -16,11 +16,11 @@
     "ui-components"
   ],
   "scripts": {
-    "build": "yarn workspaces foreach -vt run build",
-    "clean": "yarn workspaces foreach -vt run clean && rimraf docs/engine/static/apiref docs/engine/static/embed docs/research-app/static/app",
-    "doc": "yarn workspaces foreach -vt run doc",
-    "lint": "yarn workspaces foreach -vt run lint",
-    "test": "yarn workspaces foreach -vt run test",
+    "build": "yarn workspaces foreach -Avt run build",
+    "clean": "yarn workspaces foreach -Avt run clean && rimraf docs/engine/static/apiref docs/engine/static/embed docs/research-app/static/app",
+    "doc": "yarn workspaces foreach -Avt run doc",
+    "lint": "yarn workspaces foreach -Avt run lint",
+    "test": "yarn workspaces foreach -Avt run test",
     "serve-creator": "concurrently \"cd embed && yarn run serve -- --port=23000\" \"cd embed-creator && yarn run serve -- --port=8080\"",
     "serve-embed": "cd embed && yarn run serve",
     "serve-research": "cd research-app && yarn run serve"

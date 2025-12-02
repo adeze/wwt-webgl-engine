@@ -1,8 +1,96 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "name": "🏠 Root",
+      "path": "."
+    },
+    {
+      "name": "🔢 astro",
+      "path": "astro"
+    },
+    {
+      "name": "🎨 engine",
+      "path": "engine"
+    },
+    {
+      "name": "⚙️ engine-types",
+      "path": "engine-types"
+    },
+    {
+      "name": "🛠️ engine-helpers",
+      "path": "engine-helpers"
+    },
+    {
+      "name": "🏪 engine-pinia",
+      "path": "engine-pinia"
+    },
+    {
+      "name": "🧩 ui-components",
+      "path": "ui-components"
+    },
+    {
+      "name": "📦 embed-common",
+      "path": "embed-common"
+    },
+    {
+      "name": "🌐 embed",
+      "path": "embed"
+    },
+    {
+      "name": "✨ embed-creator",
+      "path": "embed-creator"
+    },
+    {
+      "name": "🔬 research-app",
+      "path": "research-app"
+    },
+    {
+      "name": "💬 research-app-messages",
+      "path": "research-app-messages"
+    },
+    {
+      "name": "🧪 tests",
+      "path": "tests"
+    }
+  ],
+  "settings": {
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    },
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/.yarn": false
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/.yarn": true,
+      "**/yarn.lock": true
+    },
+    "eslint.workingDirectories": [
+      "astro",
+      "engine",
+      "engine-types",
+      "engine-helpers",
+      "engine-pinia",
+      "ui-components",
+      "embed-common",
+      "embed",
+      "embed-creator",
+      "research-app",
+      "research-app-messages",
+      "tests"
+    ]
+  },
+  "extensions": {
+    "recommendations": [
+      "Vue.volar",
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode"
+    ]
+  }
 }

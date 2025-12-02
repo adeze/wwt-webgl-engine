@@ -233,11 +233,7 @@
       <div class="element-box" id="controls-box">
         <ul id="controls" v-if="!hideAllChrome" @keydown.stop>
           <li v-show="showToolMenu">
-            <Popper
-              placement="left"
-              :arrow="true"
-              :interactive="true"
-            >
+            <Popper placement="left" :arrow="true" :interactive="true">
               <font-awesome-icon
                 class="tooltip-target tooltip-icon"
                 icon="sliders-h"
@@ -410,7 +406,7 @@ import {
   isImageSetLayerSetting,
   isPolyAnnotationSetting,
   isPolyLineAnnotationSetting,
-  SpreadSheetLayerState
+  SpreadSheetLayerState,
 } from "@wwtelescope/engine-helpers";
 
 import {
@@ -434,7 +430,10 @@ import {
   PointerUpMessage,
   ViewStateMessage,
 } from "@wwtelescope/research-app-messages";
-import { type SearchDataProvider, DefaultSearchDataProvider } from "@wwtelescope/ui-components";
+import {
+  type SearchDataProvider,
+  DefaultSearchDataProvider,
+} from "@wwtelescope/ui-components";
 
 import {
   convertEngineSetting,
@@ -477,8 +476,7 @@ class ImageSetLayerMessageHandler {
   stretchVersion = -1;
   orderVersion = -1;
   queuedStretch: classicPywwt.StretchFitsLayerMessage | null = null;
-  queuedColormap: classicPywwt.SetFitsLayerColormapMessage | null =
-    null;
+  queuedColormap: classicPywwt.SetFitsLayerColormapMessage | null = null;
   queuedSettings: ImageSetLayerSetting[] = [];
   queuedRemoval: classicPywwt.RemoveImageSetLayerMessage | null = null;
   queuedOrder: classicPywwt.SetLayerOrderMessage | null = null;
@@ -674,8 +672,7 @@ class TableLayerMessageHandler {
   queuedUpdate: classicPywwt.UpdateTableLayerMessage | null = null;
   queuedSettings: classicPywwt.PywwtSpreadSheetLayerSetting[] = [];
   queuedRemoval: classicPywwt.RemoveTableLayerMessage | null = null;
-  queuedSelectability: selections.ModifySelectabilityMessage | null =
-    null;
+  queuedSelectability: selections.ModifySelectabilityMessage | null = null;
 
   constructor(owner: AppType) {
     this.owner = owner;
@@ -1194,7 +1191,10 @@ const App = defineComponent({
 
   props: {
     allowedOrigin: { type: String, default: null },
-    kcs: { type: KeyboardControlSettings, default: new KeyboardControlSettings({}) }
+    kcs: {
+      type: KeyboardControlSettings,
+      default: new KeyboardControlSettings({}),
+    },
   },
 
   data() {
@@ -1228,7 +1228,7 @@ const App = defineComponent({
           return `Source ${count}`;
         };
       })(),
-      
+
       statusMessageSessionId: "default",
       lastUpdatedRA: 0.0,
       lastUpdatedDec: 0.0,
@@ -1236,25 +1236,25 @@ const App = defineComponent({
       lastUpdatedRoll: 0.0,
       lastUpdatedClockRate: 1.0,
       lastUpdatedTimestamp: 0, // `Date.now()` value
-      
+
       fullscreenModeActive: false,
 
       wtmlCollectionUrl: "",
       loadedWtmlUrls: [] as string[],
-    }
+    };
   },
 
   computed: {
     ...mapState(researchAppStore, [
-      'catalogNameMappings',
-      'hipsCatalogs',
-      'selectableTableLayers',
-      'sources',
-      'visibleTableLayers'
+      "catalogNameMappings",
+      "hipsCatalogs",
+      "selectableTableLayers",
+      "sources",
+      "visibleTableLayers",
     ]),
     ...mapState(researchAppStore, {
-      appTableLayers: store => store.tableLayers,
-      spreadsheetLayers: store => store.tableLayers()
+      appTableLayers: (store) => store.tableLayers,
+      spreadsheetLayers: (store) => store.tableLayers(),
     }),
 
     curAvailableImageryData(): ImagesetInfo[] {
@@ -1300,7 +1300,7 @@ const App = defineComponent({
       },
       set(name: string) {
         this.setBackgroundImageByName(name);
-      }
+      },
     },
 
     foregroundOpacity: {
@@ -1309,7 +1309,7 @@ const App = defineComponent({
       },
       set(o: number) {
         this.setForegroundOpacity(o);
-      }
+      },
     },
 
     // "Tools" menu
@@ -1369,18 +1369,21 @@ const App = defineComponent({
       }
 
       return `${fmtDegLon(this.wwtRARad)} ${fmtDegLat(this.wwtDecRad)}`;
-    }
+    },
   },
 
   methods: {
     ...mapActions(researchAppStore, [
-      'addResearchAppTableLayer',
-      'addSource',
-      'removeResearchAppTableLayer',
-      'setResearchAppTableLayerSelectability',
+      "addResearchAppTableLayer",
+      "addSource",
+      "removeResearchAppTableLayer",
+      "setResearchAppTableLayerSelectability",
     ]),
 
-    parseFloatParam(param: string | (string | null)[], fallback: number): number {
+    parseFloatParam(
+      param: string | (string | null)[],
+      fallback: number
+    ): number {
       if (typeof param === "string") {
         const value = parseFloat(param);
         return value || fallback;
@@ -1562,7 +1565,9 @@ const App = defineComponent({
       const rootTypes = messageTypes.filter(isRoot);
 
       const addMessagesOfType: (msgType: string) => void = (msgType) => {
-        const messagesOfType = messages.filter((msg) => getType(msg) === msgType);
+        const messagesOfType = messages.filter(
+          (msg) => getType(msg) === msgType
+        );
         this.messageQueue = this.messageQueue.concat(messagesOfType);
 
         const nextTypes = messagesAdjList[msgType];
@@ -1676,7 +1681,8 @@ const App = defineComponent({
           };
         });
 
-      const imageryLayerMessages: classicPywwt.CreateImageSetLayerMessage[] = [];
+      const imageryLayerMessages: classicPywwt.CreateImageSetLayerMessage[] =
+        [];
       const imagerySettingMessages: layers.MultiModifyFitsLayerMessage[] = [];
       const imageryStretchMessages: classicPywwt.StretchFitsLayerMessage[] = [];
       this.activeImagesetLayerStates.forEach((info) => {
@@ -1720,7 +1726,8 @@ const App = defineComponent({
         }
       );
 
-      const createAnnotationMessages: classicPywwt.CreateAnnotationMessage[] = [];
+      const createAnnotationMessages: classicPywwt.CreateAnnotationMessage[] =
+        [];
       const annotationSettingsMessages: layers.MultiModifyAnnotationMessage[] =
         [];
       for (const [id, handler] of this.annotations) {
@@ -1805,7 +1812,7 @@ const App = defineComponent({
           })
         );
     },
-    
+
     // Incoming message handling
 
     initializeHandlers() {
@@ -1866,22 +1873,37 @@ const App = defineComponent({
         this.handleRemoveImageSetLayer
       );
 
-      this.messageHandlers.set("table_layer_create", this.handleCreateTableLayer);
-      this.messageHandlers.set("table_layer_update", this.handleUpdateTableLayer);
+      this.messageHandlers.set(
+        "table_layer_create",
+        this.handleCreateTableLayer
+      );
+      this.messageHandlers.set(
+        "table_layer_update",
+        this.handleUpdateTableLayer
+      );
       this.messageHandlers.set("table_layer_set", this.handleModifyTableLayer);
-      this.messageHandlers.set("table_layer_remove", this.handleRemoveTableLayer);
+      this.messageHandlers.set(
+        "table_layer_remove",
+        this.handleRemoveTableLayer
+      );
       this.messageHandlers.set(
         "table_layer_set_multi",
         this.handleMultiModifyTableLayer
       );
 
-      this.messageHandlers.set("layer_hipscat_load", this.handleLoadHipsCatalog);
+      this.messageHandlers.set(
+        "layer_hipscat_load",
+        this.handleLoadHipsCatalog
+      );
       this.messageHandlers.set(
         "layer_hipscat_datainview",
         this.handleGetHipsCatalogDataInView
       );
 
-      this.messageHandlers.set("annotation_create", this.handleCreateAnnotation);
+      this.messageHandlers.set(
+        "annotation_create",
+        this.handleCreateAnnotation
+      );
       this.messageHandlers.set("annotation_set", this.handleModifyAnnotation);
       this.messageHandlers.set(
         "annotation_set_multi",
@@ -1890,8 +1912,14 @@ const App = defineComponent({
       this.messageHandlers.set("circle_set_center", this.handleSetCircleCenter);
       this.messageHandlers.set("line_add_point", this.handleAddLinePoint);
       this.messageHandlers.set("polygon_add_point", this.handleAddPolygonPoint);
-      this.messageHandlers.set("remove_annotation", this.handleRemoveAnnotation);
-      this.messageHandlers.set("clear_annotations", this.handleClearAnnotations);
+      this.messageHandlers.set(
+        "remove_annotation",
+        this.handleRemoveAnnotation
+      );
+      this.messageHandlers.set(
+        "clear_annotations",
+        this.handleClearAnnotations
+      );
 
       this.messageHandlers.set("load_tour", this.handleLoadTour);
       this.messageHandlers.set("pause_tour", this.handlePauseTour);
@@ -1943,7 +1971,7 @@ const App = defineComponent({
       return true;
     },
 
-      // Various message handlers that don't comfortably fit elsewhere:
+    // Various message handlers that don't comfortably fit elsewhere:
 
     handleLoadImageCollection(msg: any): boolean {
       if (!classicPywwt.isLoadImageCollectionMessage(msg)) return false;
@@ -1952,7 +1980,10 @@ const App = defineComponent({
         url: msg.url,
         loadChildFolders: msg.loadChildFolders,
       }).then(() => {
-        if (this.$options.statusMessageDestination != null && this.allowedOrigin != null) {
+        if (
+          this.$options.statusMessageDestination != null &&
+          this.allowedOrigin != null
+        ) {
           const completedMessage: classicPywwt.LoadImageCollectionCompletedMessage =
             {
               event: "load_image_collection_completed",
@@ -2063,15 +2094,24 @@ const App = defineComponent({
           clientY: event.clientY,
           sessionId: this.statusMessageSessionId,
         };
-        if (this.$options.statusMessageDestination != null && this.allowedOrigin != null) {
+        if (
+          this.$options.statusMessageDestination != null &&
+          this.allowedOrigin != null
+        ) {
           // NB: if we start allowing messages to go out to more destinations, we'll
           // need to become smarter about allowedOrigin here.
-          this.$options.statusMessageDestination.postMessage(message, this.allowedOrigin);
+          this.$options.statusMessageDestination.postMessage(
+            message,
+            this.allowedOrigin
+          );
         }
       }
 
       if (!this.isPointerMoving && this.pointerStartPosition !== null) {
-        const dist = Math.sqrt((event.pageX - this.pointerStartPosition.x) ** 2 + (event.pageY - this.pointerStartPosition.y) ** 2);
+        const dist = Math.sqrt(
+          (event.pageX - this.pointerStartPosition.x) ** 2 +
+            (event.pageY - this.pointerStartPosition.y) ** 2
+        );
         if (dist > this.pointerMoveThreshold) {
           this.isPointerMoving = true;
         }
@@ -2082,7 +2122,7 @@ const App = defineComponent({
       }
       this.updateLastClosePoint(event);
     },
-    
+
     updateLastClosePoint(event: PointerEvent): void {
       const pt = { x: event.offsetX, y: event.offsetY };
       const closestPt = this.closestInView(pt, this.selectionProximity);
@@ -2103,7 +2143,12 @@ const App = defineComponent({
       this.isPointerMoving = false;
       this.pointerStartPosition = { x: event.pageX, y: event.pageY };
 
-      if (this.showFinderScope && this.wwtBackgroundImageset?.get_dataSetType() == ImageSetType.sky && event.button === 2) {  // Right click
+      if (
+        this.showFinderScope &&
+        this.wwtBackgroundImageset?.get_dataSetType() == ImageSetType.sky &&
+        event.button === 2
+      ) {
+        // Right click
         this.finderScopePosition = [event.pageX, event.pageY];
         this.finderScopeActive = true;
       }
@@ -2116,10 +2161,16 @@ const App = defineComponent({
         clientY: event.clientY,
         sessionId: this.statusMessageSessionId,
       };
-      if (this.$options.statusMessageDestination != null && this.allowedOrigin != null) {
+      if (
+        this.$options.statusMessageDestination != null &&
+        this.allowedOrigin != null
+      ) {
         // NB: if we start allowing messages to go out to more destinations, we'll
         // need to become smarter about allowedOrigin here.
-        this.$options.statusMessageDestination.postMessage(message, this.allowedOrigin);
+        this.$options.statusMessageDestination.postMessage(
+          message,
+          this.allowedOrigin
+        );
       }
 
       if (!this.isPointerMoving) {
@@ -2136,7 +2187,9 @@ const App = defineComponent({
     },
 
     nameForSource(layerData: any, layerName: string): string {
-      for (const [key, [from, to]] of Object.entries(this.catalogNameMappings)) {
+      for (const [key, [from, to]] of Object.entries(
+        this.catalogNameMappings
+      )) {
         if (from in layerData && layerName === key) {
           return `${to}: ${layerData[from]}`;
         }
@@ -2160,13 +2213,11 @@ const App = defineComponent({
 
     // ImageSet layers, including FITS layers:
 
-    getFitsLayerHandler(
-      msg: AnyFitsLayerMessage
-    ): ImageSetLayerMessageHandler {
+    getFitsLayerHandler(msg: AnyFitsLayerMessage): ImageSetLayerMessageHandler {
       let handler = this.fitsLayers.get(msg.id);
 
       if (handler === undefined) {
-        handler = new ImageSetLayerMessageHandler(this);
+        handler = new ImageSetLayerMessageHandler(this as any);
         this.fitsLayers.set(msg.id, handler);
       }
 
@@ -2247,13 +2298,11 @@ const App = defineComponent({
 
     // Table layers:
 
-    getTableLayerHandler(
-      msg: AnyTableLayerMessage
-    ): TableLayerMessageHandler {
+    getTableLayerHandler(msg: AnyTableLayerMessage): TableLayerMessageHandler {
       let handler = this.tableLayers.get(msg.id);
 
       if (handler === undefined) {
-        handler = new TableLayerMessageHandler(this);
+        handler = new TableLayerMessageHandler(this as any);
         this.tableLayers.set(msg.id, handler);
       }
 
@@ -2291,10 +2340,8 @@ const App = defineComponent({
 
     // Annotations:
 
-    createAnnotationHandler(
-      msg: classicPywwt.CreateAnnotationMessage
-    ): void {
-      const handler = AnnotationMessageHandler.tryCreate(this, msg);
+    createAnnotationHandler(msg: classicPywwt.CreateAnnotationMessage): void {
+      const handler = AnnotationMessageHandler.tryCreate(this as any, msg);
 
       if (handler !== null) {
         this.annotations.set(msg.id, handler);
@@ -2423,7 +2470,10 @@ const App = defineComponent({
             this.$options.statusMessageDestination !== null &&
             this.allowedOrigin !== null
           ) {
-            this.$options.statusMessageDestination.postMessage(reply, this.allowedOrigin);
+            this.$options.statusMessageDestination.postMessage(
+              reply,
+              this.allowedOrigin
+            );
           }
         }
       });
@@ -2434,7 +2484,10 @@ const App = defineComponent({
     // Outgoing messages
 
     maybeUpdateStatus() {
-      if (this.$options.statusMessageDestination === null || this.allowedOrigin === null)
+      if (
+        this.$options.statusMessageDestination === null ||
+        this.allowedOrigin === null
+      )
         return;
 
       const ra = this.wwtRARad;
@@ -2467,7 +2520,10 @@ const App = defineComponent({
 
       // NB: if we start allowing messages to go out to more destinations, we'll
       // need to become smarter about allowedOrigin here.
-      this.$options.statusMessageDestination.postMessage(message, this.allowedOrigin);
+      this.$options.statusMessageDestination.postMessage(
+        message,
+        this.allowedOrigin
+      );
 
       this.lastUpdatedRA = ra;
       this.lastUpdatedDec = dec;
@@ -2527,23 +2583,25 @@ const App = defineComponent({
     // HiPS catalogs (see also the table layer support)
 
     addHips(catalog: ImagesetInfo): Promise<Imageset> {
-      return this.addCatalogHipsByName({ name: catalog.name }).then((imgset) => {
-        const hips = imgset.get_hipsProperties();
+      return this.addCatalogHipsByName({ name: catalog.name }).then(
+        (imgset) => {
+          const hips = imgset.get_hipsProperties();
 
-        if (hips !== null) {
-          const catId = hips.get_catalogSpreadSheetLayer().id.toString();
-          this.applyTableLayerSettings({
-            id: catId,
-            settings: [
-              ["color", this.defaultColor],
-              ["opacity", this.defaultColor.a],
-            ],
-          });
-          catalog.id = catId;
-          this.addResearchAppTableLayer(catalog);
+          if (hips !== null) {
+            const catId = hips.get_catalogSpreadSheetLayer().id.toString();
+            this.applyTableLayerSettings({
+              id: catId,
+              settings: [
+                ["color", this.defaultColor],
+                ["opacity", this.defaultColor.a],
+              ],
+            });
+            catalog.id = catId;
+            this.addResearchAppTableLayer(catalog);
+          }
+          return imgset;
         }
-        return imgset;
-      });
+      );
     },
 
     prepareForMessaging(source: Source): selections.Source {
@@ -2559,7 +2617,7 @@ const App = defineComponent({
       }
 
       const rawSource = isProxy(source) ? toRaw(source) : source;
-      const rawLayer = isProxy(layer) ? toRaw(layer): layer;
+      const rawLayer = isProxy(layer) ? toRaw(layer) : layer;
       return {
         ...rawSource,
         catalogLayer: rawLayer,
@@ -2585,7 +2643,7 @@ const App = defineComponent({
             let handler = this.tableLayers.get(msg.tableId);
 
             if (handler === undefined) {
-              handler = new TableLayerMessageHandler(this);
+              handler = new TableLayerMessageHandler(this as any);
               this.tableLayers.set(msg.tableId, handler);
             }
 
@@ -2620,7 +2678,10 @@ const App = defineComponent({
               spreadsheetInfo: ssli,
             };
 
-            this.$options.statusMessageDestination.postMessage(reply, this.allowedOrigin);
+            this.$options.statusMessageDestination.postMessage(
+              reply,
+              this.allowedOrigin
+            );
           });
 
           break;
@@ -2753,7 +2814,7 @@ const App = defineComponent({
       this.getFitsLayerHandler(msg).handleCreateMessage(msg);
     },
 
-      // Load WTML Collection tool
+    // Load WTML Collection tool
 
     loadWtml(url: string) {
       this.loadImageCollection({
@@ -2858,9 +2919,16 @@ const App = defineComponent({
       }
 
       if (closestPt !== null) {
-        const closestRADecDeg = { ra: closestPt.ra * R2D, dec: closestPt.dec * R2D };
-        const closestScreenPoint = this.findScreenPointForRADec(closestRADecDeg);
-        const pixelDist = Math.sqrt((point.x - closestScreenPoint.x) ** 2 + (point.y - closestScreenPoint.y) ** 2);
+        const closestRADecDeg = {
+          ra: closestPt.ra * R2D,
+          dec: closestPt.dec * R2D,
+        };
+        const closestScreenPoint =
+          this.findScreenPointForRADec(closestRADecDeg);
+        const pixelDist = Math.sqrt(
+          (point.x - closestScreenPoint.x) ** 2 +
+            (point.y - closestScreenPoint.y) ** 2
+        );
         if (!threshold || pixelDist < threshold) {
           return closestPt;
         }
@@ -2870,15 +2938,21 @@ const App = defineComponent({
 
     handleFinderScopePlaceUpdate(place: Place | null) {
       // Notify clients about a change in the selected Finder Scope place
-      if (this.$options.statusMessageDestination === null || this.allowedOrigin === null)
+      if (
+        this.$options.statusMessageDestination === null ||
+        this.allowedOrigin === null
+      )
         return;
 
       const msg: finderScope.FinderScopePlaceMessage = {
         type: "finder_scope_place",
         placeXml: place?.asXml() ?? null,
       };
-      this.$options.statusMessageDestination.postMessage(msg, this.allowedOrigin);
-    }
+      this.$options.statusMessageDestination.postMessage(
+        msg,
+        this.allowedOrigin
+      );
+    },
   },
 
   // Lifecycle management
@@ -2904,15 +2978,17 @@ const App = defineComponent({
       this.loadImageCollection({
         url: this.hipsUrl,
         loadChildFolders: true,
-      }).catch((error) => {
-        console.error(error);
-      }).finally(() => {
-        // Handle the query script
-        // We (potentially) need the catalogs to have finished loading for this
-        if (script !== null) {
-          this.handleQueryScript(script);
-        }
-      });
+      })
+        .catch((error) => {
+          console.error(error);
+        })
+        .finally(() => {
+          // Handle the query script
+          // We (potentially) need the catalogs to have finished loading for this
+          if (script !== null) {
+            this.handleQueryScript(script);
+          }
+        });
 
       // Don't start listening for messages until the engine is ready to go.
       // There's no point in returning a "not ready yet" error or anything since
@@ -2979,9 +3055,7 @@ const App = defineComponent({
     );
     window.addEventListener(
       "keydown",
-      this.kcs.makeListener("moveUp", () =>
-        this.doMove(0, this.kcs.moveAmount)
-      )
+      this.kcs.makeListener("moveUp", () => this.doMove(0, this.kcs.moveAmount))
     );
     window.addEventListener(
       "keydown",
@@ -3015,9 +3089,7 @@ const App = defineComponent({
     );
     window.addEventListener(
       "keydown",
-      this.kcs.makeListener("tiltUp", () =>
-        this.doTilt(0, this.kcs.tiltAmount)
-      )
+      this.kcs.makeListener("tiltUp", () => this.doTilt(0, this.kcs.tiltAmount))
     );
     window.addEventListener(
       "keydown",
@@ -3078,7 +3150,10 @@ const App = defineComponent({
     curAvailableCatalogs(catalogs: ImagesetInfo[]) {
       // Notify clients about the new catalogs
 
-      if (this.$options.statusMessageDestination === null || this.allowedOrigin === null)
+      if (
+        this.$options.statusMessageDestination === null ||
+        this.allowedOrigin === null
+      )
         return;
 
       const msg: ApplicationStateMessage = {
@@ -3087,13 +3162,19 @@ const App = defineComponent({
         hipsCatalogNames: catalogs.map((img) => img.name),
       };
 
-      this.$options.statusMessageDestination.postMessage(msg, this.allowedOrigin);
+      this.$options.statusMessageDestination.postMessage(
+        msg,
+        this.allowedOrigin
+      );
     },
 
     lastSelectedSource(source: Source) {
       // Notify clients when a source is selected
 
-      if (this.$options.statusMessageDestination === null || this.allowedOrigin === null)
+      if (
+        this.$options.statusMessageDestination === null ||
+        this.allowedOrigin === null
+      )
         return;
 
       const msg: selections.SelectionStateMessage = {
@@ -3102,7 +3183,10 @@ const App = defineComponent({
         mostRecentSource: this.prepareForMessaging(source),
       };
 
-      this.$options.statusMessageDestination.postMessage(msg, this.allowedOrigin);
+      this.$options.statusMessageDestination.postMessage(
+        msg,
+        this.allowedOrigin
+      );
     },
 
     wwtBackgroundImageset(imageset: Imageset | null) {
@@ -3123,7 +3207,10 @@ const App = defineComponent({
         // By making this a deep watcher, it keeps of track of any change
         // in the list - even events like a property of a list entry changing
 
-        if (this.$options.statusMessageDestination === null || this.allowedOrigin === null)
+        if (
+          this.$options.statusMessageDestination === null ||
+          this.allowedOrigin === null
+        )
           return;
 
         const msg: selections.SelectionStateMessage = {
@@ -3134,18 +3221,19 @@ const App = defineComponent({
           ),
         };
 
-        this.$options.statusMessageDestination.postMessage(msg, this.allowedOrigin);
+        this.$options.statusMessageDestination.postMessage(
+          msg,
+          this.allowedOrigin
+        );
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
 
   // we need to declare this variable specially to make sure that Vue doesn't
   // try to make it reactive, which would cause it to try to read fields that
   // are prohibited in cross-origin situations:
   statusMessageDestination: null as Window | null,
-  
-
 });
 
 type AppType = InstanceType<typeof App>;
@@ -3410,7 +3498,6 @@ body {
   margin-right: 2.5rem;
   margin-top: 0.75rem;
 }
-
 
 .ellipsize {
   white-space: nowrap;

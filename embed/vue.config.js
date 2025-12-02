@@ -3,6 +3,8 @@ const path = require('path');
 module.exports = {
   publicPath: "./",
 
+  productionSourceMap: false,
+
   /* the wwt-ts file is so big and bad that eslint basically takes forever to
    * run on it. Besides giving it an eslint-disable marker, we seem to need to
    * set this to get our builds to complete. */

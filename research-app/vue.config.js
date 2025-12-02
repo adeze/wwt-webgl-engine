@@ -3,6 +3,8 @@ const path = require('path');
 module.exports = {
   publicPath: "./",
 
+  productionSourceMap: false,
+
   // the wwt-ts file is so big and bad that eslint basically takes forever to
   // run on it. Besides giving it an eslint-disable marker, we seem to need to
   // set this to get our builds to complete.
@@ -18,7 +20,19 @@ module.exports = {
       alias: {
         vue$: path.resolve('../node_modules/vue/dist/vue.runtime.esm-bundler.js'),
       },
-    }
+    },
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'chunk-vendors',
+            priority: 10,
+          },
+        },
+      },
+    },
   },
 
   // Needed for BrowserStack/Safari testing as of 2022 June. This makes the
