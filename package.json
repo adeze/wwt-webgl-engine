@@ -10,6 +10,7 @@
     "engine-helpers",
     "engine-pinia",
     "engine-types",
+    "engine-xr",
     "research-app",
     "research-app-messages",
     "tests",
@@ -34,6 +35,7 @@
     "@wwtelescope/engine-helpers": "workspace:*",
     "@wwtelescope/engine-pinia": "workspace:*",
     "@wwtelescope/engine-types": "workspace:*",
+    "@wwtelescope/engine-xr": "workspace:*",
     "@wwtelescope/research-app": "workspace:*",
     "@wwtelescope/research-app-messages": "workspace:*",
     "@wwtelescope/ui-components": "workspace:*"

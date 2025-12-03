@@ -25,6 +25,10 @@
       "path": "engine-pinia"
     },
     {
+      "name": "🥽 engine-xr",
+      "path": "engine-xr"
+    },
+    {
       "name": "🧩 ui-components",
       "path": "ui-components"
     },

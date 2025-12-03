@@ -1,0 +1,53 @@
+{
+    "author": "The WorldWide Telescope Team <hello@worldwidetelescope.org>",
+    "bugs": {
+        "email": "hello@worldwidetelescope.org",
+        "url": "https://github.com/WorldWideTelescope/wwt-webgl-engine/issues"
+    },
+    "dependencies": {
+        "@babylonjs/core": "^8.39.0",
+        "@babylonjs/loaders": "^8.39.0",
+        "@babylonjs/materials": "^8.39.0",
+        "@wwtelescope/engine-helpers": "workspace:0.0.0-dev.0",
+        "@wwtelescope/engine-types": "workspace:0.0.0-dev.0"
+    },
+    "description": "WorldWide Telescope WebXR engine powered by Babylon.js for immersive experiences",
+    "devDependencies": {
+        "@types/node": "^22.10.0",
+        "@typescript-eslint/eslint-plugin": "^5.38.1",
+        "@typescript-eslint/parser": "^5.38.1",
+        "@vitest/ui": "^4.0.15",
+        "eslint": "^8.24.0",
+        "happy-dom": "^20.0.11",
+        "rimraf": "^6.0.1",
+        "typedoc": "0.25.1",
+        "typescript": "^5.9.0",
+        "vitest": "^4.0.15"
+    },
+    "homepage": "https://worldwidetelescope.org/home/",
+    "internalDepVersions": {},
+    "keywords": [
+        "wwt",
+        "astronomy",
+        "webxr",
+        "babylon",
+        "vr",
+        "ar",
+        "vision-pro"
+    ],
+    "license": "MIT",
+    "main": "dist/index.js",
+    "name": "@wwtelescope/engine-xr",
+    "repository": "github:WorldWideTelescope/wwt-webgl-engine",
+    "scripts": {
+        "build": "tsc",
+        "clean": "rimraf dist",
+        "doc": "typedoc --options ../typedoc.json src/index.ts",
+        "lint": "eslint --ext .ts src",
+        "prepublishOnly": "npm run build",
+        "test": "vitest",
+        "test:ui": "vitest --ui",
+        "test:coverage": "vitest --coverage"
+    },
+    "version": "0.0.0-dev.0"
+}

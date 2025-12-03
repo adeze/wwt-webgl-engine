@@ -135,6 +135,20 @@
       }
     },
     {
+      "label": "Build Engine XR Package",
+      "type": "shell",
+      "command": "yarn build",
+      "options": {
+        "cwd": "${workspaceFolder}/engine-xr"
+      },
+      "group": "build",
+      "problemMatcher": ["$tsc"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
       "label": "Build Engine (Dev Mode)",
       "type": "shell",
       "command": "yarn build-dev",
